@@ -49,6 +49,10 @@ class Course(object):
 	def __str__(self):
 		return self.raw_string + ' | ' + str(self.popularity)
 
+	def getName(self):
+		name = self.major + "-" + self.course_id + "-" + self.section
+		return name
+
 
 class Session:
 	def __init__(self, url):
@@ -88,7 +92,7 @@ def course_equiv(course_obj, target):
 	return course_obj.major + ' ' + course_obj.course_id == target
 
 
-if __name__ == '__main__':
+def get_all_courses():
 	URL = 'https://sis.rpi.edu/reg/zs201901.htm'
 	session = Session(URL)
 	session.fetch('courses.txt')
@@ -111,6 +115,33 @@ if __name__ == '__main__':
 				all_courses[course_id].append(Course(line))
 			else:
 				all_courses[course_id] = [Course(line)]
+
+	return all_courses
+
+
+if __name__ == '__main__':
+	# URL = 'https://sis.rpi.edu/reg/zs201901.htm'
+	# session = Session(URL)
+	# session.fetch('courses.txt')
+	# all_courses = dict()
+	#
+	# with open('courses.txt', 'r', encoding='utf-8') as f:
+	# 	lines = f.readlines()
+	# 	for line in lines:
+	# 		temp = line.split('^')
+	# 		if len(temp) >= 2:
+	# 			field = temp[1].split('-')
+	# 			if len(field) >= 2:
+	# 				course_id = field[0] + field[1]
+	# 			else:
+	# 				continue
+	# 		else:
+	# 			continue
+	#
+	# 		if course_id in all_courses.keys():
+	# 			all_courses[course_id].append(Course(line))
+	# 		else:
+	# 			all_courses[course_id] = [Course(line)]
 
 	for item in all_courses.keys():
 		for course in all_courses[item]:
