@@ -5,9 +5,15 @@ import selenium
 from urllib import request
 
 
-# https://github.com/phantomlei3/RPICourseTrends/blob/master/sample/version1/getDatarequest.py
 class Course(object):
+	'''
+	class for an RPI course
+	'''
 	def __init__(self, data):
+		'''
+		Constructor of Course
+		:param data: a string that holds all information of this course
+		'''
 		src = data.split('^')
 
 		self.CRN = src[0]                        # CRN of course
@@ -47,11 +53,9 @@ class Course(object):
 	def __str__(self):
 		return self.raw_string
 
-
 	def getName(self):
 		name = self.major + "-" + self.course_id + "-" + self.section
 		return name
-
 
 	def getTitle(self):
 		title = self.major.strip().upper() + "-" + self.course_id.strip()
@@ -68,15 +72,19 @@ class Course(object):
 		return self.instructor.split("/")
 
 
-
 class Session:
+	'''
+	ADT that represents a connect session, used for scraping data from RPI website
+	'''
 	def __init__(self, url):
-		# self.driver = webdriver.Chrome()
-
 		self.url = url
 
 	def fetch(self, filename):
-		# self.driver.get(self.url)
+		'''
+
+		:param filename: filename of the txt file to be written
+		:return: None
+		'''
 		html, header = request.urlretrieve(self.url)
 		html_file = open(html, encoding='utf-8')
 		soup = BeautifulSoup(html_file, 'html.parser')

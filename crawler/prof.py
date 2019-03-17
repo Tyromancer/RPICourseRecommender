@@ -10,7 +10,8 @@ import os
 
 class Professor:
 	'''
-	A class that represents a Professor
+	A class that represents a Professor. All data are retrived from the website RateMyProfessor
+	Hope this script does not DDOS them
 	'''
 	def __init__(self, url, first_name='', last_name='', overall=0.0, difficulty=0.0, done=False):
 		'''
@@ -44,10 +45,7 @@ class Professor:
 
 		self.first_name.lstrip()
 		last_name = soup.find('span', attrs={'class': 'plname'})
-		# for item in last_name_list:
-		# 	if len(item.get_text()) == 0:
-		# 		continue
-		# 	self.last_name += item.get_text()
+
 		if not len(last_name.get_text()) == 0:
 			self.last_name += last_name.get_text().strip().lower().capitalize()
 
@@ -61,6 +59,7 @@ class Professor:
 		if not difficuty_grade_div.get_text() == 'N/A':
 			self.difficulty = float(difficuty_grade_div.get_text().strip())
 
+		# Uncomment this if you feel like you are DDOSing the website
 		# time.sleep(1)
 
 	def __str__(self):
@@ -98,7 +97,7 @@ def make_cs_profs():
 
 
 if __name__ == '__main__':
-	# make_cs_profs()
+	make_cs_profs()
 	# print(make_prof_dict('professors.txt'))
 	pass
 

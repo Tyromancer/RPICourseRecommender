@@ -6,10 +6,19 @@ PROF_FILENAME = crawler.prof.get_abs_prof_path()
 
 
 def popularityScore(course):
+	'''
+	:param course: course instance
+	:return: popularity of that course
+	'''
 	return course.getPopularity()
 
 
 def coreRequireScore(course, core_courses):
+	'''
+	:param course: instance of Course
+	:param core_courses: core requisite courses
+	:return: core score
+	'''
 	score = 1
 	if course in core_courses:
 		score = 2
@@ -34,6 +43,10 @@ def profPrefScore(professor_dict, course, difficulty, overall_coeff, diff_coeff)
 
 
 def timeScore():
+	'''
+	This function is currently not used and is left here for future usages, if we remember to do that
+	:return:
+	'''
 	return -1
 
 
