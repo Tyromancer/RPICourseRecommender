@@ -1,8 +1,8 @@
 # RPICourseRecommender -- A course recommend python script for RPI students
 
 ## Developers:
--[x] Bogong Yang
--[x] Yutao Sun
+- [x] Bogong Yang
+- [x] Yutao Sun
 
 ## Dependencies:
 - urllib.request
@@ -20,4 +20,3 @@ This is for HackRPI 2019 (it's a hackathon). Did not have much time for arrangin
 ##Notes:
 - This thing currently only works for the major CSCI. For other majors, add the templates in /algo/doc, and modify the scripts accordingly (hmmmm)
 - If you modifies this script and use it for a larger set of data, REMEMBER TO PAUSE EACH REQUEST FOR AT LEAST ONE SECOND SO THAT YOU DO NOT DDOS STUFF
-
