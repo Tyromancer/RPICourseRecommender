@@ -5,14 +5,27 @@ from html.parser import HTMLParser
 
 import time
 import re
+import os
 
 
 class Professor:
+	'''
+	A class that represents a Professor
+	'''
 	def __init__(self, url, first_name='', last_name='', overall=0.0, difficulty=0.0, done=False):
-		self.tid = url.split('tid=')[1]
-		self.tid.replace('&showMyProfs=true', '')
-		self.first_name = first_name
-		self.last_name = last_name
+		'''
+		:param url: link or tid string of the professor on RateMyProfessor (RMP)
+		:param first_name: First name + M.I
+		:param last_name: Last name
+		:param overall: Overall quality point on RMP
+		:param difficulty: Difficulty level on RMP
+		:param done: Boolean value that indicates whether need to fetch data from RMP or not
+		'''
+
+		self.tid = url.split('tid=')[1]            # tid in RMP's request url
+		self.tid.replace('&showMyProfs=true', '')  # get rid of some parameters
+		self.first_name = first_name               # first name default to empty
+		self.last_name = last_name                 # last name default to empty
 		self.overall = overall
 		self.difficulty = difficulty
 		if not done:
@@ -53,6 +66,10 @@ class Professor:
 	def __str__(self):
 		return self.last_name.strip() + ',' + self.first_name.strip() + ',' + str(self.overall) + ',' + str(self.difficulty) + ',' + self.tid
 
+	def getScore(self, difficulty, overall_coeff, diff_coeff):
+		return overall_coeff * self.overall + (abs(self.difficulty - difficulty) + 1) / 5 * diff_coeff
+
+
 
 def make_prof_dict(filename):
 	result = dict()
@@ -61,12 +78,14 @@ def make_prof_dict(filename):
 		for prof_line in prof_lines:
 			pline = prof_line.split(',')
 			prof = Professor('tid=' + pline[-1], pline[1], pline[0], float(pline[2]), float(pline[3]))
-			if pline[0] in result.keys():
-				result[pline[0]].append(prof)
-			else:
-				result[pline[0]] = [prof]
+			if pline[0] not in result.keys():
+				result[pline[0]] = prof
 
 	return result
+
+
+def get_abs_prof_path():
+	return os.path.abspath('crawler/professors.txt')
 
 
 def make_cs_profs():

@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import selenium
 
+from urllib import request
+
 
 # https://github.com/phantomlei3/RPICourseTrends/blob/master/sample/version1/getDatarequest.py
 class Course(object):
@@ -28,6 +30,7 @@ class Course(object):
 		self.end_time = src[8]
 		self.instructor = src[9]
 		self.location = src[10]
+		self.pre_req = list()  # TODO
 
 		if src[11] == '':
 			self.max_enroll = 0
@@ -39,31 +42,38 @@ class Course(object):
 		else:
 			self.current_enroll = int(src[12])
 
-		if self.max_enroll == 0:
-			self.popularity = -1
-		else:
-			self.popularity = float(self.current_enroll) / float(self.max_enroll)
 		self.remaining_seats = src[13]
 		self.raw_string = data
 
 	def __str__(self):
-		return self.raw_string + ' | ' + str(self.popularity)
+		return self.raw_string
 
 	def getName(self):
 		name = self.major + "-" + self.course_id + "-" + self.section
 		return name
 
+	def getPopularity(self):
+		if self.max_enroll == 0:
+			return -1
+
+		popularity = ((self.max_enroll - self.current_enroll) / 2 + self.current_enroll) / self.max_enroll
+		return popularity
+
+	def getProfessors(self):
+		return self.instructor.split("/")
+
 
 class Session:
 	def __init__(self, url):
-		self.driver = webdriver.Chrome()
+		# self.driver = webdriver.Chrome()
 
 		self.url = url
 
 	def fetch(self, filename):
-		self.driver.get(self.url)
-		html = self.driver.page_source
-		soup = BeautifulSoup(html, 'html.parser')
+		# self.driver.get(self.url)
+		html, header = request.urlretrieve(self.url)
+		html_file = open(html, encoding='utf-8')
+		soup = BeautifulSoup(html_file, 'html.parser')
 
 		courses = soup.find_all('tr')
 		with open(filename, 'w', encoding='utf-8') as f:
@@ -143,8 +153,9 @@ if __name__ == '__main__':
 	# 		else:
 	# 			all_courses[course_id] = [Course(line)]
 
-	for item in all_courses.keys():
-		for course in all_courses[item]:
-			print(course)
-
-	print(len(all_courses))
+	# for item in all_courses.keys():
+	# 	for course in all_courses[item]:
+	# 		print(course)
+	#
+	# print(len(all_courses))
+	pass
