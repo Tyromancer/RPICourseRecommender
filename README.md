@@ -1,4 +1,4 @@
-# RPICourseRecommender -- A course recommend python script for RPI students
+# RPICourseRecommender -- A course recommender python script for RPI students
 
 ## Developers:
 - Bogong Yang
