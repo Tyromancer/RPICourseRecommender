@@ -1,10 +1,7 @@
 from bs4 import BeautifulSoup
-from selenium import webdriver
 from urllib import request
-from html.parser import HTMLParser
 
 import time
-import re
 import os
 
 

@@ -1,15 +1,15 @@
 import algo.main
 
 if __name__ == '__main__':
-	# popularity_coeff = 1
-	# core_coeff = 1
-	# prof_coeff = 1
-	# time_coeff = 1
+	popularity_coeff = 1
+	core_coeff = 1
+	prof_coeff = 1
+	time_coeff = 1
 
-	popularity_coeff = 10  # coefficient of course popularity
-	core_coeff = 1         # coefficient of whether course is core requisite or not
-	prof_coeff = 1         # coefficient of overall and difficulty grade of professor
-	time_coeff = 1         # coefficient of time preference
+	# popularity_coeff = 10  # coefficient of course popularity
+	# core_coeff = 1         # coefficient of whether course is core requisite or not
+	# prof_coeff = 1         # coefficient of overall and difficulty grade of professor
+	# time_coeff = 1         # coefficient of time preference
 
 	# Data of professors are scraped from RateMyProfessor
 	# professor preferance:
